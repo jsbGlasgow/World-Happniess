@@ -23,7 +23,7 @@ library(plotly)
 ```
 
 ```{r data, echo = FALSE, eval = TRUE, warning = FALSE, message = FALSE}
-setwd(dir = "D:\\STUDY\\GLASGOW\\Semester-2\\Data Analysis Skills\\Gruopwork\\Groupwork - 1 poster")
+#setwd(dir = "D:\\STUDY\\GLASGOW\\Semester-2\\Data Analysis Skills\\Gruopwork\\Groupwork - 1 poster")
 happy <- read_csv("happiness.csv")
 happy <- as_tibble(happy)
 ```
@@ -43,7 +43,6 @@ happy <- happy %>%
 The World Happiness Dataset is the iconic statistical data of global happiness. It contains six critical factors: economic production, social support, life expectancy, freedom, absence of corruption, and generosity. To find which factors are most influential to the ladder score, we fitted a linear regression model with all relevant explanatory variables. Noting that Africa’s ladder score seems the smallest amongst all countries, we used bootstrapping to find the 95th percentile of the difference in ladder score between Africa and the rest of the world and fit the regression model for these two cases.
 
 # Explanatory analysis {#sec:Explan}
-
 
 ```{r summ}
 happy %>%
@@ -96,7 +95,6 @@ bootstrap_distribution_mean %>%
 
 
 ```
-
 
 This next section of code produces a boxplot of ladder score, using region as a factor for all regions.
 
@@ -190,8 +188,3 @@ Our final model shows as follows,
 
 $$\widehat{\mbox{Ladder score}} = -1.439
 +5.649 \cdot \mbox{Social support} + 2.993 \cdot \mbox{Freedom}, $$
-
-```{r plot_3D}
-plot_ly(happy, x = ~`Social support`, y = ~`Social support`, z = ~`Ladder score`,
-        type = "scatter3d", mode = "markers")
-```
