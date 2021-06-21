@@ -188,3 +188,5 @@ Our final model shows as follows,
 
 $$\widehat{\mbox{Ladder score}} = -1.439
 +5.649 \cdot \mbox{Social support} + 2.993 \cdot \mbox{Freedom}, $$
+
+test test test
