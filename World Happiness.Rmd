@@ -136,6 +136,8 @@ percentile_ci
 
 # Linear models {#sec:models}
 
+## Question 1 
+
 First we fit the full model includes six variables.
 
 $$\widehat{\mbox{Ladder score}} = \widehat\alpha + \widehat\beta_{\mbox{1}} \cdot \mbox{GDP}
@@ -189,3 +191,48 @@ Our final model shows as follows,
 $$\widehat{\mbox{Ladder score}} = -1.439
 +5.649 \cdot \mbox{Social support} + 2.993 \cdot \mbox{Freedom}, $$
 
+Before we can proceed to use the fitted model, we must check the assumption of the model. we assesses the model assumptions by plotting the residuals against the explanatory variable in Figure \ref{fig:resids_1} ,\ref{fig:resids_1} and a histogram (Figure \ref{fig:hist}) of the residuals to assess whether they are normally distributed.
+
+```{r assumptions}
+regression_points <- get_regression_points(final_model)
+```
+
+```{r,echo=TRUE,fig.align='center',fig.width=13,fig.cap="\\label{fig:resids_1} Scatterplots of the residuals.",fig.pos='H',message=FALSE}
+ggplot(regression_points, aes(x = `Social support`,y=residual)) +
+  geom_point() +
+  geom_jitter(width = 0.1) +
+  labs(x = "Social support",y="Residual")+
+  geom_hline(yintercept = 0,col="blue",size=1)
+```
+
+```{r,echo=TRUE,fig.align='center',fig.width=13,fig.cap="\\label{fig:resids_2} Scatterplots of the residuals.",fig.pos='H',message=FALSE}
+ggplot(regression_points, aes(x = `Freedom to make life choices`, y = residual)) +
+  geom_point() +
+  labs(x = "Freedom to make life choices", y = "Residual", title = "Residuals vs Freedom to make life choices")  +
+  geom_hline(yintercept = 0, col = "blue", size = 1)
+```
+
+The scatterplots show an approximately spread of the residuals above and below the zero line, which means the data statisfied the first assumption, the residuals have mean zero.
+
+```{r hist,echo=FALSE,fig.with=13,fig.align="center",fig.cap="\\label{fig:hist} Histgram of the residuals.",fig.pos='H',message=FALSE}
+ggplot(regression_points,aes(x=residual))+
+  geom_histogram(color="white")+
+  labs(x="Residuals")
+```
+
+The histgram support the assumption of normally distributed errors in the model.
+
+## Question 2
+
+In question 2, we discuss the difference between Africa and other countries.
+
+```{r Africa,fig.align='center',fig.cap="\\label{fig:Africa} Scatterplots of of Social support, Freedome to make life choice and Ladder score in Africa and other countries.",fig.pos='H',message=FALSE}
+ggplot(data = happy,mapping = aes(x=`Social support`,y=`Ladder score`,group=African,color=African,size=`Freedom to make life choices`))+
+  geom_point()+
+  labs(x="Socail support",y="Ladder score",title = "Ladder score, Social supprot and Freedom to make life choices")+
+  geom_smooth(method = "lm", se = FALSE,aes(color=African,linetype=African)) + 
+  geom_hline(yintercept = 5,color="purple")
+
+```
+
+Figure \ref{fig:Africa} shows that most non-African countries have higher Ladder scores than African countries, also non-African countries have higher social support and freedom to make life choice.
