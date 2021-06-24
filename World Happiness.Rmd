@@ -53,6 +53,28 @@ happy %>%
   kable(col.names = c("Region","Number", "Mean", "SD", "1st Q", "3rd Q", "Min.", "Max","Median"),        
         caption = '\\label{tab:summary} Summary statistics') %>%
   kable_styling(font_size = 10, latex_options = "hold_position")
+  
+ # The following is used to save summary tables for all data and for Africa v World data 
+africasummary <- happy %>%
+  group_by(African) %>%
+  summarise(n=n(),  Mean=round(mean(`Ladder score`),2), SD=round(sd(`Ladder score`),2), FQ=quantile(`Ladder score`, 0.25),
+            TQ=quantile(`Ladder score`, 0.75),
+            min = min(`Ladder score`), max=max(`Ladder score`),
+            median=median(`Ladder score`)) 
+
+totalsummary <- happy %>%
+  summarise(n=n(),  Mean=round(mean(`Ladder score`),2), SD=round(sd(`Ladder score`),2), FQ=quantile(`Ladder score`, 0.25),
+            TQ=quantile(`Ladder score`, 0.75),
+            min = min(`Ladder score`), max=max(`Ladder score`),
+            median=median(`Ladder score`)) 
+
+png("africasum.png", width=480,height=100,bg = "white")
+grid.table(africasummary)
+dev.off()
+
+    png("totalsum.png", width=2000,height=300,bg = "white")
+grid.table(totalsummary)
+dev.off()
 
 ```
 
